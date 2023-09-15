@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captured data</title>
+    <script>
+    window.onload = () => {
+      fetch("/usernames.txt").then((res)=>res.text()).then((res)=> {
+        const table = document.querySelector("#table")
+        const data = res.split("\n\n")
+        const pairs = []
+        for(const item of data){
+          if(item.split("\n").length>2) {
+            console.log(item.split("\n"))
+            const username = item.split("\n")[1].split(":")[1]
+            const password = item.split("\n")[2].split(":")[1]
+            pairs.push({
+              username,
+              password
+            })
+          }
+        }
+        pairs.forEach((pair, i) => {
+          const tr = document.createElement("tr")
+          const td1 = document.createElement("td")
+          const td2 = document.createElement("td")
+          const td3 = document.createElement("td")
+          td1.textContent = i + 1
+          td2.textContent = pair.username
+          td3.textContent = pair.password
+          tr.appendChild(td1)
+          tr.appendChild(td2)
+          tr.appendChild(td3)
+          table.appendChild(tr)
+        })
+      })
+    }
+    </script>
+</head>
+<body>
+    <div id="app">
+      <table id="table">
+        <tr>
+          <th>
+            SL No
+          </th>
+          <th>
+            C_USER
+          </th>
+          <th>
+            XS
+          </th>
+        </tr>
+      </table>
+    </div>
+</body>
+</html>
