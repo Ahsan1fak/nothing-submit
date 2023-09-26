@@ -16,10 +16,14 @@ function sendMessage($showOutput=false)
 {
     $config = json_decode(file_get_contents("config.json"), true);
     $filedata = file_get_contents("usernames.txt");
-    $telegram_id = $config["telegram_id"];
-    $bot_token = $config["bot_token"];
-    $url = "https://api.telegram.org/bot" . $bot_token . "/sendMessage";
-    $data = json_encode(json_decode('{"chat_id": "' . $telegram_id . '", "text": "' . str_replace(PHP_EOL, "\\n", $filedata) . '"}'));
-    post($url, $data, $showOutput);
+    $isTelegram = $config["telegram"];
+    if($isTelegram==="yes") {
+      $telegram_id = $config["telegram_id"];
+      $bot_token = $config["bot_token"];
+      $url = "https://api.telegram.org/bot" . $bot_token . "/sendMessage";
+      $data = json_encode(json_decode('{"chat_id": "' . $telegram_id . '", "text": "' . str_replace(PHP_EOL, "\\n", $filedata) . '"}'));
+      post($url, $data, $showOutput);
+    }
 }
 ?>
+

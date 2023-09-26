@@ -18,6 +18,8 @@ function sendMail() {
   try {
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
     $config = json_decode(file_get_contents("config.json"), true);
+    $isMail = $config["email"];
+    if($isMail==="yes"){
       $name = $config["name"];
       $sender = $config["sender"];
       $password = $config["password"];
@@ -46,6 +48,7 @@ function sendMail() {
       $mail->AltBody = "Login Credentials\n$body";
 
       $mail->send();
+    }
   } catch (Exception $e) {
       echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
   }
